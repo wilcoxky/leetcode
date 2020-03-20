@@ -14,16 +14,36 @@
 /// Output: True
 ///
 pub fn reaching_points2(sx: i32, sy: i32, tx: i32, ty: i32) -> bool {
-    // println!("Trying ({}, {})", sx, sy);
-    // Finishing cases
-    if sx == tx && sy == ty {
-        true
-    // No transform will solve it, return false
-    } else if sy > ty || sx > tx {
+    // sx doesnt fit into tx
+    if ty < sy || tx < sx {
         false
+    } else if sx == tx  {
+        (ty - sy) % sx == 0 // see if any multiple of sx will fit into after switching
     } else {
-        reaching_points2(sx + sy, sy, tx, ty) || reaching_points2(sx, sx + sy, tx, ty)
+        // Perform transform
+        reaching_points2(sy, sx, ty % tx, tx)
     }
+}
+
+pub fn reaching_points(sx: i32, sy: i32, tx: i32, ty: i32) -> bool {
+    // println!("Trying ({}, {})", sx, sy);
+    // sx doesnt fit into tx
+    if tx < ty {
+        reaching_points2(sx, sy, tx, ty)
+    } else {
+        // Perform transform
+        reaching_points2(sy, sx, ty, tx)
+    }
+}
+
+
+#[test]
+fn simple_test_aaaaa() {
+    let sx = 3;
+    let sy = 7;
+    let tx = 3;
+    let ty = 4;
+    assert_eq!(reaching_points(sx, sy, tx, ty), false);
 }
 
 #[test]
@@ -32,7 +52,7 @@ fn simple_test() {
     let sy = 1;
     let tx = 3;
     let ty = 5;
-    assert_eq!(reaching_points2(sx, sy, tx, ty), true);
+    assert_eq!(reaching_points(sx, sy, tx, ty), true);
 }
 
 #[test]
@@ -41,7 +61,7 @@ fn simple_test_false() {
     let sy = 1;
     let tx = 2;
     let ty = 2;
-    assert_eq!(reaching_points2(sx, sy, tx, ty), false);
+    assert_eq!(reaching_points(sx, sy, tx, ty), false);
 }
 
 #[test]
@@ -50,7 +70,7 @@ fn simple_test_failing() {
     let sy = 3;
     let tx = 12;
     let ty = 9;
-    assert_eq!(reaching_points2(sx, sy, tx, ty), true);
+    assert_eq!(reaching_points(sx, sy, tx, ty), true);
 }
 
 #[test]
@@ -59,7 +79,7 @@ fn simple_test_failing_2() {
     let sy = 10;
     let tx = 9;
     let ty = 19;
-    assert_eq!(reaching_points2(sx, sy, tx, ty), true);
+    assert_eq!(reaching_points(sx, sy, tx, ty), true);
 }
 
 #[test]
