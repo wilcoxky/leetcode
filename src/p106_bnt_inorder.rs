@@ -1,4 +1,5 @@
 use std::cell::RefCell;
+use std::collections::HashMap;
 use std::rc::Rc;
 
 // Definition for a binary tree node.
@@ -21,26 +22,63 @@ impl TreeNode {
 }
 
 pub fn build_tree(inorder: Vec<i32>, postorder: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
-    let root_node_val = postorder.last().unwrap();
-    let mut left_tree_nodes= vec![];
-    let mut right_tree_nodes= vec![];
+    let mut map = HashMap::new();
     // Gather all left, and right tree tree nodes
-    let mut root_hit = false;
-    for i in 0..inorder.len() {
-        let val = inorder[i];
-        if val == *root_node_val {
-            root_hit = true;
-            continue;
-        }
-        if root_hit {
-            right_tree_nodes.push(val);
-        } else{
-            left_tree_nodes.push(val);
-        }
+    for index in 0..inorder.len() {
+        let val = inorder[index];
+        map.insert(val, index as i32);
     }
-    println!("Left: {:?}", left_tree_nodes);
-    println!("Right: {:?}", right_tree_nodes);
-    None
+    // Build recursively
+    build(
+        &inorder,
+        &postorder,
+        0,
+        inorder.len() as i32 - 1,
+        0,
+        postorder.len() as i32 - 1,
+        &map,
+    )
+}
+
+fn build(
+    inorder: &Vec<i32>,
+    postorder: &Vec<i32>,
+    in_start: i32,
+    in_end: i32,
+    post_start: i32,
+    post_end: i32,
+    mapping: &HashMap<i32, i32>,
+) -> Option<Rc<RefCell<TreeNode>>> {
+    if post_start > post_end || in_start > in_end {
+        None
+    } else {
+        let last_value = postorder[post_end as usize];
+        let node = Rc::new(RefCell::new(TreeNode::new(last_value)));
+
+        let root_index = mapping.get(&last_value).unwrap();
+
+        let left_child = build(
+            inorder,
+            postorder,
+            in_start,
+            root_index - 1,
+            post_start,
+            post_start + root_index - in_start - 1,
+            mapping,
+        );
+        let right_child = build(
+            inorder,
+            postorder,
+            root_index + 1,
+            in_end,
+            post_start + root_index - in_start,
+            post_end - 1,
+            mapping,
+        );
+        node.borrow_mut().left = left_child;
+        node.borrow_mut().right = right_child;
+        Some(node)
+    }
 }
 
 /// Tree from example given
