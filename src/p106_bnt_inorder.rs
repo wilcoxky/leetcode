@@ -107,3 +107,4 @@ fn calc_right_path() {
     let postorder = vec![9, 15, 7, 20, 3];
     assert_eq!(build_tree(inorder, postorder), Some(node1));
 }
+
