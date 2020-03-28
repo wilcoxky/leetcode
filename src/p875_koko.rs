@@ -1,33 +1,30 @@
-use std::collections::BinaryHeap;
-
 pub fn min_eating_speed(piles: Vec<i32>, h: i32) -> i32 {
-    let ranked_el = h - piles.len() as i32;
-    let required_rank = if ranked_el > piles.len() as i32 {
-        piles.len() as i32
-    } else {
-        ranked_el
-    };
+    let mut copy = piles.clone();
+    copy.sort();
 
-    let mu
+    let mut max = *copy.last().unwrap();
+    let mut low = 1;
 
-    let mut max_heap = BinaryHeap::from(piles);
-
-    let mut min_speed = i32::max_value();
-
-    // let (quotient, remainder) = div_mod_floor();
-
-    min_speed
+    while low <= max {
+        let min = (max + low) / 2;
+        if can_eat_all(&piles, h, min) {
+            max = min - 1;
+        } else {
+            low = min + 1
+        }
+    }
+    low
 }
 
-fn div_mod_floor(n: i32, rhs: i32) -> (i32, i32) {
-    let quotient = n / rhs;
-    let remainder = n - (quotient * rhs);
-    (quotient, remainder)
-}
-
-#[test]
-fn test_div_mod() {
-    assert_eq!((17, 3), div_mod_floor(88, 5));
+fn can_eat_all(piles: &[i32], h: i32, k: i32) -> bool {
+    let mut count = 0;
+    for p in piles {
+        count += *p / k;
+        if  *p % k != 0 {
+            count += 1
+        }
+    }
+    count <= h
 }
 
 #[test]
