@@ -7,7 +7,8 @@
 // mod toptal;
 // mod p938_bst_sum;
 // mod p106_bnt_inorder;
-mod p875_koko;
+// mod p875_koko;
+mod p1389_target_order;
 
 fn main() {
     println!("Hello LeetCode");
