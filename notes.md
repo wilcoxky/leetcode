@@ -1,4 +1,4 @@
-# Problem 875 [Koko](https://leetcode.com/problems/koko-eating-bananas/solution/)
+### Problem 875 [Koko](https://leetcode.com/problems/koko-eating-bananas/solution/)
 My thoughts on this problem, were that you had to find the max. And instead of
 first thinking of binary search. I thought a heap would be an easy way of
 testing whether or not I need to keep it. After looking at the related topics,
@@ -13,3 +13,6 @@ aways I got with it are the following.
 
 This makes sense. Notes for next time is to not get caught up in a data
 structure and to look more towards different methods instead.
+
+
+### Problem 583 [Delete Operation](https://leetcode.com/problems/delete-operation-for-two-strings)
