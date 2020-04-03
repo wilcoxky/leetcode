@@ -16,3 +16,7 @@ structure and to look more towards different methods instead.
 
 
 ### Problem 583 [Delete Operation](https://leetcode.com/problems/delete-operation-for-two-strings)
+First thought was to slide the word 1 and word 2 pointers together to get a
+count. While this works for the most part the next problem which we are
+currently trying to solve is how to deal with multiple entries of the
+same letter. I think to do this I will need to make a map, and then at the end maybe count the values left in the map and return.
