@@ -39,3 +39,23 @@ which allowed us to use our previous calculations to easily compare
 the strings. Watch the video for the refresher. Another thing that
 was helpful was I learned how to debug Rust code in VSCode, it was
 super simple and just followed this [guide](https://jason-williams.co.uk/debugging-rust-in-vscode).
+
+
+### Problem 350 [Delete Operation](https://leetcode.com/problems/intersection-of-two-arrays-ii/)
+
+Naive solution, is to go through the larger array and when a corrisponding element is found. You remove it from array *num2* and then redo the search. This requires you to pass through the second array twice results in O(max(n,m)^2).
+
+Trying to think of a better solution now...
+You could sort the arrays (nlogn) and then search for 
+
+Proposed Solutions: Create a map over the first array holding a count of the occurances, then loop through subtracking the entries in the map and add if the count is greater than 0.
+
+Related questions:
+- What if the given array is already sorted? How would you optimize your algorithm
+If sorted, you can compare the 
+- What if nums1's size is small compared to nums2's size? Which algorithm is better
+If num1 is smaller you can use it as the array in the naive solution that you would loop through.
+
+- What if elements of nums2 are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?
+In disk, the looping over the num2 array would not be ideal. Thus one should loop through that array only once.
+

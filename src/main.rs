@@ -9,12 +9,14 @@
 // mod p106_bnt_inorder;
 // mod p875_koko;
 // mod p1389_target_order;
-mod p583_delete_operation;
+// mod p583_delete_operation;
+// mod p946_push_pop;
+mod p350_intersection;
 
 fn main() {
     println!("Hello LeetCode");
-    let word1 = "sea".to_owned();
-    let word2 = "eat".to_owned();
-    use p583_delete_operation::min_distance;
-    min_distance(word1, word2);
+    // let word1 = "sea".to_owned();
+    // let word2 = "eat".to_owned();
+    // use p583_delete_operation::min_distance;
+    // min_distance(word1, word2);
 }
